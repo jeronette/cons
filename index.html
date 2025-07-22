@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InmoBolivia - Plataforma Inmobiliaria</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .landing {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 30px;
+            margin-bottom: 2rem;
+        }
+
+        .landing h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .landing p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .progress-bar {
+            background: #e1e5e9;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .user-role {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .payment-method {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover, .payment-method.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #667eea;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .floating-action {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .floating-action:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .landing h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="logo">🏠 InmoBolivia</div>
+            <div class="nav-buttons" id="navButtons">
+                <button class="btn btn-primary" onclick="showSection('landing')">Inicio</button>
+                <button class="btn btn-secondary" onclick="showSection('login')">Login</button>
+                <button class="btn btn-success" onclick="showSection('register')">Registro</button>
+            </div>
+        </nav>
+
+        <!-- Landing Page -->
+        <div id="landing" class="section active">
+            <div class="landing">
+                <h1>🏡 Bienvenido a InmoBolivia</h1>
+                <p>La plataforma líder en construcción y venta de propiedades en Bolivia. Gestiona proyectos, supervisa construcciones y realiza transacciones seguras desde cualquier lugar del país.</p>
+                <div style="margin-top: 2rem;">
+                    <button class="btn btn-primary" onclick="showSection('login')" style="margin: 0 1rem;">Iniciar Sesión</button>
+                    <button class="btn btn-secondary" onclick="showSection('register')" style="margin: 0 1rem;">Registrarse</button>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-number">500+</span>
+                    <span>Proyectos Completados</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">1,200+</span>
+                    <span>Clientes Satisfechos</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">50+</span>
+                    <span>Profesionales</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">9</span>
+                    <span>Departamentos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login -->
+        <div id="login" class="section">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">🔐 Iniciar Sesión</h2>
+            <form onsubmit="handleLogin(event)" style="max-width: 400px; margin: 0 auto;">
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Ingresar</button>
+            </form>
+        </div>
+
+        <!-- Register -->
+        <div id="register" class="section">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">📝 Registro de Usuario</h2>
+            <form onsubmit="handleRegister(event)" style="max-width: 600px; margin: 0 auto;">
+                <div class="grid" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" id="regName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido:</label>
+                        <input type="text" id="regLastName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="password" id="regPassword" required>
+                </div>
+                <div class="form-group">
+                    <label>Rol:</label>
+                    <select id="regRole" required>
+                        <option value="">Seleccionar rol</option>
+                        <option value="cliente">Cliente</option>
+                        <option value="vendedor">Vendedor</option>
+                        <option value="operador">Operador</option>
+                        <option value="constructor">Constructor</option>
+                        <option value="ingeniero">Ingeniero</option>
+                        <option value="administrador">Administrador</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Teléfono:</label>
+                    <input type="tel" id="regPhone" required>
+                </div>
+                <div class="form-group">
+                    <label>Ciudad:</label>
+                    <select id="regCity" required>
+                        <option value="">Seleccionar ciudad</option>
+                        <option value="la-paz">La Paz</option>
+                        <option value="cochabamba">Cochabamba</option>
+                        <option value="santa-cruz">Santa Cruz</option>
+                        <option value="sucre">Sucre</option>
+                        <option value="oruro">Oruro</option>
+                        <option value="potosi">Potosí</option>
+                        <option value="tarija">Tarija</option>
+                        <option value="beni">Beni</option>
+                        <option value="pando">Pando</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success" style="width: 100%;">Registrarse</button>
+            </form>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="color: #667eea;">📊 Panel de Control</h2>
+                <div class="user-role" id="userRole">Cliente</div>
+            </div>
+            
+            <div class="grid">
+                <div class="card" onclick="showSection('inventory')">
+                    <h3>📦 Inventario</h3>
+                    <p>Gestiona materiales y recursos de construcción</p>
+                </div>
+                <div class="card" onclick="showSection('houses')">
+                    <h3>🏠 Creador de Casas</h3>
+                    <p>Diseña y planifica nuevos proyectos</p>
+                </div>
+                <div class="card" onclick="showSection('construction')">
+                    <h3>🏗️ Estado de Construcción</h3>
+                    <p>Monitorea el progreso de los proyectos</p>
+                </div>
+                <div class="card" onclick="showSection('payments')">
+                    <h3>💳 Pagos</h3>
+                    <p>Procesa pagos y transacciones</p>
+                </div>
+                <div class="card" onclick="showSection('crud')">
+                    <h3>⚙️ Gestión CRUD</h3>
+                    <p>Administra propiedades y usuarios</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory -->
+        <div id="inventory" class="section">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">📦 Inventario de Materiales</h2>
+            
+            <button class="btn btn-success" onclick="openModal('addItemModal')" style="margin-bottom: 2rem;">+ Agregar Material</button>
+            
+            <div class="grid" id="inventoryGrid">
+                <!-- Inventory items will be populated here -->
+            </div>
+        </div>
+
+        <!-- Houses Creator -->
+        <div id="houses" class="section">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">🏠 Creador de Casas</h2>
+            
+            <form onsubmit="createHouse(event)" style="max-width: 800px; margin: 0 auto;">
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Nombre del Proyecto:</label>
+                        <input type="text" id="houseName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Propiedad:</label>
+                        <select id="houseType" required>
+                            <option value="">Seleccionar tipo</option>
+                            <option value="casa">Casa</option>
+                            <option value="departamento">Departamento</option>
+                            <option value="terreno">Terreno</option>
+                            <option value="edificio">Edificio</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Precio (Bs.):</label>
+                        <input type="number" id="housePrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Superficie (m²):</label>
+                        <input type="number" id="houseSurface" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Ubicación:</label>
+                    <input type="text" id="houseLocation" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Descripción:</label>
+                    <textarea id="houseDescription" rows="4"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Constructor Asignado:</label>
+                    <select id="houseConstructor" required>
+                        <option value="">Seleccionar constructor</option>
+                        <option value="constructor1">Juan Pérez - Constructor</option>
+                        <option value="constructor2">María García - Constructor</option>
+                        <option value="constructor3">Carlos López - Constructor</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-success" style="width: 100%;">Crear Proyecto</button>
+            </form>
+        </div>
+
+        <!-- Construction Progress -->
+        <div id="construction" class="section">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">🏗️ Estado de Construcción</h2>
+            
+            <div class="grid" id="constructionProjects">
+                <!-- Construction projects will be populated here -->
+            </div>
+        </div>
+
+        <!-- Payments -->
+        <div id="payments" class="section">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">💳 Pasarela de Pagos</h2>
+            
+            <form onsubmit="processPayment(event)" style="max-width: 600px; margin: 0 auto;">
+                <div class="form-group">
+                    <label>Tipo de Producto/Servicio:</label>
+                    <select id="paymentType" required onchange="updatePaymentOptions()">
+                        <option value="">Seleccionar tipo</option>
+                        <option value="casa">Casa</option>
+                        <option value="departamento">Departamento</option>
+                        <option value="terreno">Terreno</option>
+                        <option value="servicio">Servicio de Construcción</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Monto (Bs.):</label>
+                    <input type="number" id="paymentAmount" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Métodos de Pago disponibles en Bolivia:</label>
+                    <div class="payment-methods">
+                        <div class="payment-method" onclick="selectPaymentMethod(this)" data-method="tigo">
+                            <h4>Tigo Money</h4>
+                            <p>Pago móvil</p>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod(this)" data-method="qr">
+                            <h4>QR Simple</h4>
+                            <p>Código QR</p>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod(this)" data-method="banco">
+                            <h4>Transferencia</h4>
+                            <p>Banco Nacional</p>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod(this)" data-method="efectivo">
+                            <h4>Efectivo</h4>
+                            <p>Pago en oficina</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <input type="hidden" id="selectedPaymentMethod">
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Procesar Pago</button>
+            </form>
+        </div>
+
+        <!-- CRUD Operations -->
+        <div id="crud" class="section">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">⚙️ Gestión CRUD</h2>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <button class="btn btn-primary" onclick="showCrudSection('users')" style="margin: 0 0.5rem;">👥 Usuarios</button>
+                <button class="btn btn-secondary" onclick="showCrudSection('properties')" style="margin: 0 0.5rem;">🏠 Propiedades</button>
+                <button class="btn btn-success" onclick="showCrudSection('projects')" style="margin: 0 0.5rem;">🏗️ Proyectos</button>
+            </div>
+            
+            <div id="crudContent">
+                <p style="text-align: center; color: #888;">Selecciona una sección para gestionar</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Item Modal -->
+    <div id="addItemModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addItemModal')">&times;</span>
+            <h3>Agregar Material al Inventario</h3>
+            <form onsubmit="addInventoryItem(event)">
+                <div class="form-group">
+                    <label>Nombre del Material:</label>
+                    <input type="text" id="itemName" required>
+                </div>
+                <div class="form-group">
+                    <label>Cantidad:</label>
+                    <input type="number" id="itemQuantity" required>
+                </div>
+                <div class="form-group">
+                    <label>Precio Unitario (Bs.):</label>
+                    <input type="number" id="itemPrice" required>
+                </div>
+                <div class="form-group">
+                    <label>Categoría:</label>
+                    <select id="itemCategory" required>
+                        <option value="">Seleccionar categoría</option>
+                        <option value="cemento">Cemento</option>
+                        <option value="hierro">Hierro</option>
+                        <option value="ladrillos">Ladrillos</option>
+                        <option value="pintura">Pintura</option>
+                        <option value="electricidad">Material Eléctrico</option>
+                        <option value="plomeria">Plomería</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success" style="width: 100%;">Agregar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="floating-action" onclick="showSection('dashboard')" title="Dashboard">🏠</button>
+
+    <script>
+        let currentUser = null;
+        let inventory = [];
+        let houses = [];
+        let constructionProjects = [];
+        let users = [
+            { id: 1, name: "Admin", email: "admin@inmobilivia.com", role: "administrador" },
+            { id: 2, name: "Juan Constructor", email: "juan@constructor.com", role: "constructor" },
+            { id: 3, name: "María Vendedora", email: "maria@ventas.com", role: "vendedor" }
+        ];
+
+        // Initialize sample data
+        function initSampleData() {
+            inventory = [
+                { id: 1, name: "Cemento Portland", quantity: 100, price: 45, category: "cemento" },
+                { id: 2, name: "Hierro 12mm", quantity: 50, price: 85, category: "hierro" },
+                { id: 3, name: "Ladrillos Gambote", quantity: 1000, price: 1.5, category: "ladrillos" },
+                { id: 4, name: "Pintura Latex", quantity: 25, price: 120, category: "pintura" }
+            ];
+
+            constructionProjects = [
+                { id: 1, name: "Casa La Paz Centro", progress: 75, status: "En construcción", constructor: "Juan Pérez" },
+                { id: 2, name: "Departamento Zona Sur", progress: 40, status: "En construcción", constructor: "María García" },
+                { id: 3, name: "Villa Cochabamba", progress: 90, status: "Terminando", constructor: "Carlos López" },
+                { id: 4, name: "Edificio Santa Cruz", progress: 25, status: "Iniciando", constructor: "Juan Pérez" }
+            ];
+
+            updateInventoryDisplay();
+            updateConstructionDisplay();
+        }
+
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update navbar for authenticated user
+            if (currentUser && sectionId !== 'landing' && sectionId !== 'login' && sectionId !== 'register') {
+                updateNavbarForUser();
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Simple authentication (in real app, this would be server-side)
+            if (email && password) {
+                currentUser = {
+                    name: email.split('@')[0],
+                    email: email,
+                    role: email.includes('admin') ? 'administrador' : 'cliente'
+                };
+                
+                document.getElementById('userRole').textContent = currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1);
+                showSection('dashboard');
+                alert('¡Login exitoso! Bienvenido ' + currentUser.name);
+            }
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const formData = {
+                name: document.getElementById('regName').value,
+                lastName: document.getElementById('regLastName').value,
+                email: document.getElementById('regEmail').value,
+                role: document.getElementById('regRole').value,
+                phone: document.getElementById('regPhone').value,
+                city: document.getElementById('regCity').value
+            };
+
+            currentUser = {
+                name: formData.name + ' ' + formData.lastName,
+                email: formData.email,
+                role: formData.role,
+                phone: formData.phone,
+                city: formData.city
+            };
+
+            users.push({ 
+                id: users.length + 1, 
+                name: currentUser.name, 
+                email: currentUser.email, 
+                role: currentUser.role,
+                phone: currentUser.phone,
+                city: currentUser.city
+            });
+
+            document.getElementById('userRole').textContent = currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1);
+            showSection('dashboard');
+            alert('¡Registro exitoso! Bienvenido ' + currentUser.name);
+        }
+
+        function updateNavbarForUser() {
+            const navButtons = document.getElementById('navButtons');
+            navButtons.innerHTML = `
+                <button class="btn btn-primary" onclick="showSection('dashboard')">Dashboard</button>
+                <button class="btn btn-secondary" onclick="showSection('inventory')">Inventario</button>
+                <button class="btn btn-success" onclick="showSection('houses')">Crear Casa</button>
+                <button class="btn btn-primary" onclick="logout()">Salir</button>
+            `;
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('navButtons').innerHTML = `
+                <button class="btn btn-primary" onclick="showSection('landing')">Inicio</button>
+                <button class="btn btn-secondary" onclick="showSection('login')">Login</button>
+                <button class="btn btn-success" onclick="showSection('register')">Registro</button>
+            `;
+            showSection('landing');
+            alert('Sesión cerrada correctamente');
+        }
+
+        function createHouse(event) {
+            event.preventDefault();
+            const houseData = {
+                id: houses.length + 1,
+                name: document.getElementById('houseName').value,
+                type: document.getElementById('houseType').value,
+                price: document.getElementById('housePrice').value,
+                surface: document.getElementById('houseSurface').value,
+                location: document.getElementById('houseLocation').value,
+                description: document.getElementById('houseDescription').value,
+                constructor: document.getElementById('houseConstructor').value,
+                status: 'Planificado',
+                createdBy: currentUser.name
+            };
+
+            houses.push(houseData);
+            
+            // Add to construction projects
+            constructionProjects.push({
+                id: constructionProjects.length + 1,
+                name: houseData.name,
+                progress: 0,
+                status: 'Planificado',
+                constructor: houseData.constructor.split(' - ')[0]
+            });
+
+            updateConstructionDisplay();
+            alert('¡Casa creada exitosamente!');
+            document.querySelector('#houses form').reset();
+        }
+
+        function updateInventoryDisplay() {
+            const inventoryGrid = document.getElementById('inventoryGrid');
+            inventoryGrid.innerHTML = '';
+
+            inventory.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <h3>${item.name}</h3>
+                    <p><strong>Cantidad:</strong> ${item.quantity} unidades</p>
+                    <p><strong>Precio:</strong> ${item.price} Bs/unidad</p>
+                    <p><strong>Categoría:</strong> ${item.category}</p>
+                    <p><strong>Total:</strong> ${item.quantity * item.price} Bs</p>
+                    <button class="btn btn-secondary" onclick="editInventoryItem(${item.id})" style="margin: 0.5rem;">Editar</button>
+                    <button class="btn btn-primary" onclick="deleteInventoryItem(${item.id})" style="margin: 0.5rem;">Eliminar</button>
+                `;
+                inventoryGrid.appendChild(card);
+            });
+        }
+
+        function updateConstructionDisplay() {
+            const projectsGrid = document.getElementById('constructionProjects');
+            projectsGrid.innerHTML = '';
+
+            constructionProjects.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                const statusColor = project.progress >= 90 ? '#4CAF50' : project.progress >= 50 ? '#FF9800' : '#F44336';
+                
+                card.innerHTML = `
+                    <h3>${project.name}</h3>
+                    <p><strong>Constructor:</strong> ${project.constructor}</p>
+                    <p><strong>Estado:</strong> <span style="color: ${statusColor};">${project.status}</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${project.progress}%"></div>
+                    </div>
+                    <p style="text-align: center; margin-top: 0.5rem;"><strong>${project.progress}%</strong> Completado</p>
+                    <button class="btn btn-primary" onclick="updateProgress(${project.id})" style="margin-top: 1rem; width: 100%;">Actualizar Progreso</button>
+                `;
+                projectsGrid.appendChild(card);
+            });
+        }
+
+        function addInventoryItem(event) {
+            event.preventDefault();
+            const itemData = {
+                id: inventory.length + 1,
+                name: document.getElementById('itemName').value,
+                quantity: parseInt(document.getElementById('itemQuantity').value),
+                price: parseFloat(document.getElementById('itemPrice').value),
+                category: document.getElementById('itemCategory').value
+            };
+
+            inventory.push(itemData);
+            updateInventoryDisplay();
+            closeModal('addItemModal');
+            document.querySelector('#addItemModal form').reset();
+            alert('Material agregado al inventario exitosamente');
+        }
+
+        function editInventoryItem(id) {
+            const item = inventory.find(i => i.id === id);
+            if (item) {
+                const newQuantity = prompt(`Nueva cantidad para ${item.name}:`, item.quantity);
+                const newPrice = prompt(`Nuevo precio para ${item.name}:`, item.price);
+                
+                if (newQuantity && newPrice) {
+                    item.quantity = parseInt(newQuantity);
+                    item.price = parseFloat(newPrice);
+                    updateInventoryDisplay();
+                    alert('Item actualizado exitosamente');
+                }
+            }
+        }
+
+        function deleteInventoryItem(id) {
+            if (confirm('¿Estás seguro de eliminar este item?')) {
+                inventory = inventory.filter(i => i.id !== id);
+                updateInventoryDisplay();
+                alert('Item eliminado exitosamente');
+            }
+        }
+
+        function updateProgress(projectId) {
+            const project = constructionProjects.find(p => p.id === projectId);
+            if (project) {
+                const newProgress = prompt(`Ingresa el nuevo progreso para ${project.name} (0-100):`, project.progress);
+                if (newProgress && newProgress >= 0 && newProgress <= 100) {
+                    project.progress = parseInt(newProgress);
+                    if (project.progress >= 100) {
+                        project.status = 'Completado';
+                    } else if (project.progress >= 50) {
+                        project.status = 'En construcción';
+                    } else {
+                        project.status = 'Iniciando';
+                    }
+                    updateConstructionDisplay();
+                    alert('Progreso actualizado exitosamente');
+                }
+            }
+        }
+
+        function selectPaymentMethod(element) {
+            // Remove selected class from all payment methods
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked method
+            element.classList.add('selected');
+            document.getElementById('selectedPaymentMethod').value = element.dataset.method;
+        }
+
+        function updatePaymentOptions() {
+            const paymentType = document.getElementById('paymentType').value;
+            // Here you could update payment options based on the selected type
+            // For now, all payment methods are available for all types
+        }
+
+        function processPayment(event) {
+            event.preventDefault();
+            const paymentData = {
+                type: document.getElementById('paymentType').value,
+                amount: document.getElementById('paymentAmount').value,
+                method: document.getElementById('selectedPaymentMethod').value,
+                user: currentUser.name,
+                timestamp: new Date().toLocaleString('es-BO')
+            };
+
+            if (!paymentData.method) {
+                alert('Por favor selecciona un método de pago');
+                return;
+            }
+
+            // Simulate payment processing
+            setTimeout(() => {
+                alert(`¡Pago procesado exitosamente!
+                
+Detalles:
+- Tipo: ${paymentData.type}
+- Monto: ${paymentData.amount} Bs
+- Método: ${getPaymentMethodName(paymentData.method)}
+- Usuario: ${paymentData.user}
+- Fecha: ${paymentData.timestamp}
+                
+Recibirás una confirmación por email.`);
+                
+                document.querySelector('#payments form').reset();
+                document.querySelectorAll('.payment-method').forEach(method => {
+                    method.classList.remove('selected');
+                });
+            }, 2000);
+
+            alert('Procesando pago... Por favor espera.');
+        }
+
+        function getPaymentMethodName(method) {
+            const methods = {
+                'tigo': 'Tigo Money',
+                'qr': 'QR Simple',
+                'banco': 'Transferencia Bancaria',
+                'efectivo': 'Pago en Efectivo'
+            };
+            return methods[method] || method;
+        }
+
+        function showCrudSection(section) {
+            const crudContent = document.getElementById('crudContent');
+            
+            switch(section) {
+                case 'users':
+                    crudContent.innerHTML = generateUsersTable();
+                    break;
+                case 'properties':
+                    crudContent.innerHTML = generatePropertiesTable();
+                    break;
+                case 'projects':
+                    crudContent.innerHTML = generateProjectsTable();
+                    break;
+            }
+        }
+
+        function generateUsersTable() {
+            let html = `
+                <h3 style="color: #667eea; margin-bottom: 1rem;">👥 Gestión de Usuarios</h3>
+                <button class="btn btn-success" onclick="addUser()" style="margin-bottom: 1rem;">+ Agregar Usuario</button>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <thead style="background: linear-gradient(45deg, #667eea, #764ba2); color: white;">
+                            <tr>
+                                <th style="padding: 1rem; text-align: left;">ID</th>
+                                <th style="padding: 1rem; text-align: left;">Nombre</th>
+                                <th style="padding: 1rem; text-align: left;">Email</th>
+                                <th style="padding: 1rem; text-align: left;">Rol</th>
+                                <th style="padding: 1rem; text-align: left;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            users.forEach(user => {
+                html += `
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 1rem;">${user.id}</td>
+                        <td style="padding: 1rem;">${user.name}</td>
+                        <td style="padding: 1rem;">${user.email}</td>
+                        <td style="padding: 1rem;">
+                            <span class="user-role" style="font-size: 0.8rem; padding: 0.3rem 0.6rem;">${user.role}</span>
+                        </td>
+                        <td style="padding: 1rem;">
+                            <button class="btn btn-secondary" onclick="editUser(${user.id})" style="margin-right: 0.5rem; padding: 0.5rem 1rem; font-size: 0.9rem;">Editar</button>
+                            <button class="btn btn-primary" onclick="deleteUser(${user.id})" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Eliminar</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            return html;
+        }
+
+        function generatePropertiesTable() {
+            let html = `
+                <h3 style="color: #667eea; margin-bottom: 1rem;">🏠 Gestión de Propiedades</h3>
+                <button class="btn btn-success" onclick="addProperty()" style="margin-bottom: 1rem;">+ Agregar Propiedad</button>
+                <div class="grid">
+            `;
+            
+            houses.forEach(house => {
+                html += `
+                    <div class="card">
+                        <h4>${house.name}</h4>
+                        <p><strong>Tipo:</strong> ${house.type}</p>
+                        <p><strong>Precio:</strong> ${house.price} Bs</p>
+                        <p><strong>Superficie:</strong> ${house.surface} m²</p>
+                        <p><strong>Ubicación:</strong> ${house.location}</p>
+                        <p><strong>Estado:</strong> ${house.status}</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn btn-secondary" onclick="editProperty(${house.id})" style="margin-right: 0.5rem;">Editar</button>
+                            <button class="btn btn-primary" onclick="deleteProperty(${house.id})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `</div>`;
+            return html;
+        }
+
+        function generateProjectsTable() {
+            let html = `
+                <h3 style="color: #667eea; margin-bottom: 1rem;">🏗️ Gestión de Proyectos</h3>
+                <button class="btn btn-success" onclick="addProject()" style="margin-bottom: 1rem;">+ Agregar Proyecto</button>
+                <div class="grid">
+            `;
+            
+            constructionProjects.forEach(project => {
+                const statusColor = project.progress >= 90 ? '#4CAF50' : project.progress >= 50 ? '#FF9800' : '#F44336';
+                html += `
+                    <div class="card">
+                        <h4>${project.name}</h4>
+                        <p><strong>Constructor:</strong> ${project.constructor}</p>
+                        <p><strong>Estado:</strong> <span style="color: ${statusColor};">${project.status}</span></p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${project.progress}%"></div>
+                        </div>
+                        <p style="text-align: center; margin: 0.5rem 0;"><strong>${project.progress}%</strong></p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn btn-secondary" onclick="editProject(${project.id})" style="margin-right: 0.5rem;">Editar</button>
+                            <button class="btn btn-primary" onclick="deleteProject(${project.id})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `</div>`;
+            return html;
+        }
+
+        // CRUD Functions
+        function addUser() {
+            const name = prompt('Nombre del usuario:');
+            const email = prompt('Email del usuario:');
+            const role = prompt('Rol del usuario (cliente/vendedor/operador/constructor/ingeniero/administrador):');
+            
+            if (name && email && role) {
+                users.push({
+                    id: users.length + 1,
+                    name: name,
+                    email: email,
+                    role: role
+                });
+                showCrudSection('users');
+                alert('Usuario agregado exitosamente');
+            }
+        }
+
+        function editUser(id) {
+            const user = users.find(u => u.id === id);
+            if (user) {
+                const newName = prompt('Nuevo nombre:', user.name);
+                const newEmail = prompt('Nuevo email:', user.email);
+                const newRole = prompt('Nuevo rol:', user.role);
+                
+                if (newName && newEmail && newRole) {
+                    user.name = newName;
+                    user.email = newEmail;
+                    user.role = newRole;
+                    showCrudSection('users');
+                    alert('Usuario actualizado exitosamente');
+                }
+            }
+        }
+
+        function deleteUser(id) {
+            if (confirm('¿Estás seguro de eliminar este usuario?')) {
+                users = users.filter(u => u.id !== id);
+                showCrudSection('users');
+                alert('Usuario eliminado exitosamente');
+            }
+        }
+
+        function addProperty() {
+            alert('Usa el "Creador de Casas" para agregar nuevas propiedades');
+            showSection('houses');
+        }
+
+        function editProperty(id) {
+            const house = houses.find(h => h.id === id);
+            if (house) {
+                const newPrice = prompt('Nuevo precio:', house.price);
+                const newStatus = prompt('Nuevo estado:', house.status);
+                
+                if (newPrice && newStatus) {
+                    house.price = newPrice;
+                    house.status = newStatus;
+                    showCrudSection('properties');
+                    alert('Propiedad actualizada exitosamente');
+                }
+            }
+        }
+
+        function deleteProperty(id) {
+            if (confirm('¿Estás seguro de eliminar esta propiedad?')) {
+                houses = houses.filter(h => h.id !== id);
+                showCrudSection('properties');
+                alert('Propiedad eliminada exitosamente');
+            }
+        }
+
+        function addProject() {
+            alert('Usa el "Creador de Casas" para agregar nuevos proyectos');
+            showSection('houses');
+        }
+
+        function editProject(id) {
+            const project = constructionProjects.find(p => p.id === id);
+            if (project) {
+                const newProgress = prompt('Nuevo progreso (0-100):', project.progress);
+                const newStatus = prompt('Nuevo estado:', project.status);
+                
+                if (newProgress && newStatus) {
+                    project.progress = parseInt(newProgress);
+                    project.status = newStatus;
+                    showCrudSection('projects');
+                    updateConstructionDisplay();
+                    alert('Proyecto actualizado exitosamente');
+                }
+            }
+        }
+
+        function deleteProject(id) {
+            if (confirm('¿Estás seguro de eliminar este proyecto?')) {
+                constructionProjects = constructionProjects.filter(p => p.id !== id);
+                showCrudSection('projects');
+                updateConstructionDisplay();
+                alert('Proyecto eliminado exitosamente');
+            }
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initSampleData();
+        });
+    </script>
+</body>
+</html>
